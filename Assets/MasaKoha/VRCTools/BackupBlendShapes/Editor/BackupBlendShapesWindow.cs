@@ -38,6 +38,27 @@ namespace Masakoha.VRCTools.BackupBlendShapes.Editor
                 "保存や更新をしたいオブジェクトを入れてください",
                 MessageType.Info
             );
+
+            var redTextStyle =
+                new GUIStyle(GUI.skin.label)
+                {
+                    normal = { textColor = Color.red },
+                    wordWrap = true
+                };
+            var yellowTextStyle = new GUIStyle(GUI.skin.label)
+            {
+                normal = { textColor = Color.yellow },
+                wordWrap = true
+            };
+            var boxStyle1 = new GUIStyle(GUI.skin.box);
+            var errorIconTexture1 = EditorGUIUtility.IconContent("console.warnicon").image as Texture2D;
+            boxStyle1.padding = new RectOffset(Padding, Padding, Padding, Padding);
+            boxStyle1.margin = new RectOffset(Margin, Margin, Margin, Margin);
+            GUILayout.BeginHorizontal(boxStyle1);
+            GUILayout.Label(errorIconTexture1, GUILayout.Width(IconSize), GUILayout.Height(IconSize)); // アイコンを表示
+            GUILayout.Label("※保存や更新を押したら、「対象のブレンドシェイプのオブジェクト」が空っぽになる仕様にしています。\n" +
+                            "データを保存するオブジェクトとデータを更新するオブジェクトを間違えないよう確認してください。", yellowTextStyle);
+            GUILayout.EndHorizontal();
             EditorGUILayout.PropertyField(_rendererProperty, new GUIContent("対象のブレンドシェイプのオブジェクト"));
             EditorGUILayout.HelpBox(
                 "保存 : 指定したオブジェクトに紐づいているブレンドシェイプの" +
@@ -48,12 +69,6 @@ namespace Masakoha.VRCTools.BackupBlendShapes.Editor
             {
                 Save();
             }
-
-            var redTextStyle = new GUIStyle(GUI.skin.label)
-            {
-                normal = { textColor = Color.red },
-                wordWrap = true
-            };
 
             var boxStyle = new GUIStyle(GUI.skin.box);
             var errorIconTexture = EditorGUIUtility.IconContent("console.erroricon").image as Texture2D;
@@ -75,6 +90,12 @@ namespace Masakoha.VRCTools.BackupBlendShapes.Editor
         private void Save()
         {
             var renderer = _data.renderer;
+            if (renderer == null)
+            {
+                Debug.LogError("対象のブレンドシェイプのオブジェクトに何も入っていません。");
+                return;
+            }
+
             var mesh = renderer.sharedMesh;
             var blendShapeCount = mesh.blendShapeCount;
             var avatarInfo = new AvatarInfo();
@@ -103,6 +124,7 @@ namespace Masakoha.VRCTools.BackupBlendShapes.Editor
             File.WriteAllText(path, json);
             Debug.Log($"ファイルが保存されました : {path}");
             _blendShapes.Clear();
+            _data = new SkinnedMeshData();
             AssetDatabase.Refresh();
         }
 
@@ -124,6 +146,13 @@ namespace Masakoha.VRCTools.BackupBlendShapes.Editor
             catch (Exception e)
             {
                 Debug.LogError($"json の読み込みに失敗 : {e.Message}\n 読込ファイル先 : {path}");
+                return;
+            }
+
+            if (_data.renderer == null)
+            {
+                Debug.LogError("対象のブレンドシェイプのオブジェクトに何も入っていません。");
+                return;
             }
 
             for (var i = 0; i < _data.renderer.sharedMesh.blendShapeCount; i++)
@@ -138,6 +167,7 @@ namespace Masakoha.VRCTools.BackupBlendShapes.Editor
                 avatarInfo.blendShapes.Remove(blendShapeItem);
             }
 
+            _data = new SkinnedMeshData();
             Debug.Log($"シェイプキーを更新しました : {path}");
         }
     }
