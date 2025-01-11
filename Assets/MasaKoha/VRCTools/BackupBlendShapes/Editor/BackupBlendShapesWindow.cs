@@ -56,8 +56,8 @@ namespace Masakoha.VRCTools.BackupBlendShapes.Editor
             boxStyle1.margin = new RectOffset(Margin, Margin, Margin, Margin);
             GUILayout.BeginHorizontal(boxStyle1);
             GUILayout.Label(errorIconTexture1, GUILayout.Width(IconSize), GUILayout.Height(IconSize)); // アイコンを表示
-            GUILayout.Label("※保存や更新を押したら、「対象のブレンドシェイプのオブジェクト」が空っぽになる仕様にしています。\n" +
-                            "データを保存するオブジェクトとデータを更新するオブジェクトを間違えないよう確認してください。", yellowTextStyle);
+            GUILayout.Label("※保存や保存呼び出しを押したら、「対象のブレンドシェイプのオブジェクト」が空っぽになる仕様にしています。\n" +
+                            "データを保存するオブジェクトとデータを保存呼び出しするオブジェクトを間違えないよう確認してください。", yellowTextStyle);
             GUILayout.EndHorizontal();
             EditorGUILayout.PropertyField(_rendererProperty, new GUIContent("対象のブレンドシェイプのオブジェクト"));
             EditorGUILayout.HelpBox(
@@ -76,10 +76,10 @@ namespace Masakoha.VRCTools.BackupBlendShapes.Editor
             boxStyle.margin = new RectOffset(Margin, Margin, Margin, Margin);
             GUILayout.BeginHorizontal(boxStyle);
             GUILayout.Label(errorIconTexture, GUILayout.Width(IconSize), GUILayout.Height(IconSize)); // アイコンを表示
-            GUILayout.Label("※更新をした場合、ブレンドシェイプのパラメータが上書きされます。\n" +
+            GUILayout.Label("※保存呼び出しをした場合、ブレンドシェイプのパラメータが上書きされます。\n" +
                             "現状のブレンドシェイプのパラメータを残したい場合、あらかじめ現在の状態を保存してください", redTextStyle);
             GUILayout.EndHorizontal();
-            if (GUILayout.Button("更新 : Update"))
+            if (GUILayout.Button("保存呼び出し : Update"))
             {
                 UpdateBlendShape();
             }
@@ -130,10 +130,10 @@ namespace Masakoha.VRCTools.BackupBlendShapes.Editor
 
         private void UpdateBlendShape()
         {
-            var path = EditorUtility.OpenFilePanel("ブレンドシェイプファイルの更新", "", "json");
+            var path = EditorUtility.OpenFilePanel("ブレンドシェイプファイルの保存呼び出し", "", "json");
             if (string.IsNullOrEmpty(path))
             {
-                Debug.Log("更新キャンセル");
+                Debug.Log("保存呼び出しキャンセル");
                 return;
             }
 
@@ -168,7 +168,7 @@ namespace Masakoha.VRCTools.BackupBlendShapes.Editor
             }
 
             _data = new SkinnedMeshData();
-            Debug.Log($"シェイプキーを更新しました : {path}");
+            Debug.Log($"保存呼び出しからシェイプキーを更新しました : {path}");
         }
     }
 }
