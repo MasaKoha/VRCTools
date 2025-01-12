@@ -1,5 +1,8 @@
 # バックアップブレンドシェイプ(Backup BlendShapes)
 アバターや衣装などの各部位のブレンドシェイプの値を保存/保存呼び出しできる機能
+
+本作は Unity 2022.3.22f1 で作っております。
+
 ## ver1.0 でアバターがアップロード等できなくなる問題
 **ver1.0 において、アバターのテストやアップロードできなくなる現象を確認しました。
 一度バックアップブレンドシェイプを丸ごと削除して、最新のver1.1を入れ直すと解決できます。
@@ -16,6 +19,7 @@ The type or namespace name 'EditorWindow' could not be found (are you missing a 
 アバターアップロード時にコンソールを見てエラーに「MasaKoha」と見えたら、バックアップブレンドシェイプを削除して、booth やこちらからで再DLしてください。
 
 ## 使い方
+- ダウンロードした unitypackage を既存のプロジェクトにインポートしてください
 - Unityのメニュー -> Tools => Masakoha -> バックアップブレンドシェイプ
 でウィンドウを開く
 ![スクリーンショット 2025-01-11 183452](https://github.com/user-attachments/assets/a4e28c06-5641-4fd2-8b93-c322bc65b2a5)
