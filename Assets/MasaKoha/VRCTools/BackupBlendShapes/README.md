@@ -3,21 +3,6 @@
 
 本作は Unity 2022.3.22f1 で作っております。
 
-## ver1.0 でアバターがアップロード等できなくなる問題
-**ver1.0 において、アバターのテストやアップロードできなくなる現象を確認しました。
-一度バックアップブレンドシェイプを丸ごと削除して、最新のver1.1を入れ直すと解決できます。
-エラー内容は以下のようなエラーです。**
-
-```
-Assets\MasaKoha\VRCTools\BackupBlendShapes\Editor\BackupBlendShapesWindow.cs(10,51): error CS0246:
-The type or namespace name 'EditorWindow' could not be found (are you missing a using directive or an assembly reference?)
-```
-
-アップロード時に出るエラーのスクショ
-![スクリーンショット 2025-01-12 124355](https://github.com/user-attachments/assets/10300200-60bb-4127-b028-34d690046470)
-
-アバターアップロード時にコンソールを見てエラーに「MasaKoha」と見えたら、バックアップブレンドシェイプを削除して、booth やこちらからで再DLしてください。
-
 ## 使い方
 - ダウンロードした unitypackage を既存のプロジェクトにインポートしてください
 - Unityのメニュー -> Tools => Masakoha -> バックアップブレンドシェイプ
